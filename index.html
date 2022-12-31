@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>HappyNewYear</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="hpy">
+        <h1>
+            <span class="top">Happy</span>
+            <span class="btm"><span class="left">New</span><span class="right">Year</span></span>
+        </h1>
+        </div>
+    <div id ="msgbox">   
+     <form name="submit-to-google-sheet">
+        <input type="text" name="Name" placeholder="Enter your name or type Anonymous !" required>
+        <input type="text" name="Message" placeholder="Anything to say before 2022 ;)" style="width:50vw; height: 25vh;" required>
+        <button type="submit">submit</button>
+        <h4 id="msg"></h4>
+     </form>
+    </div> 
+    </body>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbybuKGkYMn5R8zL046LbBJL9uwCjKBTb9_zYz3EJuFda9b3ea0NNAHZgp0ymLFtS1c1/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById("msg")
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                msg.innerHTML = "Message sent successfully!!!",
+                msg.style.backgroundColor = '#32CD32'
+                setTimeout(function(){
+                     msg.innerHTML = "",
+                     msg.style.backgroundColor = '#F8F9FA'
+    
+                 },3000)
+                form.reset()
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+</html>
